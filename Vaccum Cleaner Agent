@@ -1,0 +1,54 @@
+def vacuum_world():
+    goal_state = {'A': '0', 'B': '0'}
+    cost = 0
+
+    location = input("Enter Location of Vacuum (A or B): ").upper()
+    status_location = input(f"Enter status of {location} (1 for Dirty, 0 for Clean): ")
+    other_location = 'B' if location == 'A' else 'A'
+    status_other = input(f"Enter status of {other_location} (1 for Dirty, 0 for Clean): ")
+
+    print("\n--- Initial Conditions ---")
+    print(f"Vacuum is at location {location}")
+    print(f"Location {location} status: {'Dirty' if status_location == '1' else 'Clean'}")
+    print(f"Location {other_location} status: {'Dirty' if status_other == '1' else 'Clean'}")
+
+    if status_location == '1':
+        print(f"\nCleaning location {location}...")
+        goal_state[location] = '0'
+        cost += 1
+        print(f"Cost +1 (Suck) → Total Cost: {cost}")
+    else:
+        print(f"\nLocation {location} is already clean.")
+
+    if status_other == '1':
+        print(f"\nMoving to location {other_location}...")
+        cost += 1
+        print(f"Cost +1 (Move) → Total Cost: {cost}")
+        print(f"Cleaning location {other_location}...")
+        goal_state[other_location] = '0'
+        cost += 1
+        print(f"Cost +1 (Suck) → Total Cost: {cost}")
+    else:
+        print(f"\nLocation {other_location} is already clean. No need to move.")
+
+    print("\n--- Final State ---")
+    print(f"Goal State: {goal_state}")
+    print(f"Performance Measurement (Total Cost): {cost}")
+
+vacuum_world()
+
+
+
+--- Initial Conditions ---
+Vacuum is at location A
+Location A status: Dirty
+Location B status: Clean
+
+Cleaning location A...
+Cost +1 (Suck) → Total Cost: 1
+
+Location B is already clean. No need to move.
+
+--- Final State ---
+Goal State: {'A': '0', 'B': '0'}
+Performance Measurement (Total Cost): 1
